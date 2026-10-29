@@ -1,0 +1,106 @@
+<title>Hoverlight Privacy Policy</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Hoverlight does not collect, store or send any personal data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&family=Literata:opsz,wght@7..72,400&display=swap">
+<style>
+/*BASE_CSS*/
+
+.top { padding-block: var(--s5) var(--s4); row-gap: var(--s3); }
+.brand a { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.policy { padding-bottom: var(--s6); }
+.policy article { grid-column: 1 / 4; display: grid; gap: var(--s4); }
+.policy h1 { margin: 0; font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem); font-weight: 600; letter-spacing: -0.025em; line-height: 1.1; }
+.policy .updated { margin: var(--s1) 0 0; color: var(--ink-soft); font-size: var(--t-small); }
+.policy .summary {
+  margin: 0; padding: var(--pad); border-radius: var(--radius); background: var(--sheet); border: 1px solid var(--rule);
+  font-family: var(--font-read); font-size: 1.125rem; line-height: 1.7;
+}
+.policy section { display: grid; gap: var(--s1); max-width: 64ch; }
+.policy h2 { margin: 0; font-size: 1.0625rem; font-weight: 600; }
+.policy p, .policy li { margin: 0; color: var(--ink-soft); line-height: 1.7; }
+.policy ul { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
+.policy strong { color: var(--ink); font-weight: 500; }
+
+@media (max-width: 880px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .policy article, footer .brand, footer nav { grid-column: 1 / -1; }
+  footer nav { justify-content: flex-start; }
+  footer { row-gap: var(--s2); }
+}
+@media (max-width: 560px) {
+  :root { --pad: var(--s3); }
+  .page { padding-left: max(var(--s2), env(safe-area-inset-left, 0px)); padding-right: max(var(--s2), env(safe-area-inset-right, 0px)); }
+}
+</style>
+<!--BODY-->
+<!--LOGO-->
+
+<div class="page">
+  <header class="top grid">
+    <div class="brand"><a href="./"><svg width="26" height="22" aria-hidden="true"><use href="#logo"/></svg>Hoverlight</a></div>
+  </header>
+
+  <main class="policy grid">
+    <article>
+      <div>
+        <h1>Privacy policy</h1>
+        <p class="updated">Last updated 29 October 2026</p>
+      </div>
+
+      <p class="summary">Hoverlight does not collect, store, sell or send any of your data. Everything it does happens inside your own browser.</p>
+
+      <section>
+        <h2>What the extension reads</h2>
+        <p>To find the sentence under your mouse, Hoverlight looks at the text of the page you are viewing, in your browser, at the moment you hover. That text is never saved, copied or sent anywhere. Typing areas and password fields are ignored.</p>
+      </section>
+
+      <section>
+        <h2>What the extension stores</h2>
+        <p>Only your settings:</p>
+        <ul>
+          <li>whether highlighting is on or off</li>
+          <li>your highlight colour and strength</li>
+          <li>how many nearby sentences to light up</li>
+          <li>the websites where you chose to pause it</li>
+        </ul>
+        <p>These are kept with your browser's own extension storage. If you are signed in to your browser with sync turned on, your browser may sync these settings between your own devices. Hoverlight has no server and cannot see them.</p>
+      </section>
+
+      <section>
+        <h2>What the extension never does</h2>
+        <ul>
+          <li>No analytics, tracking, cookies or advertising.</li>
+          <li>No network requests of any kind.</li>
+          <li>No accounts and no personal information.</li>
+          <li>No remote code. Everything that runs is included in the extension package.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Permissions, in plain words</h2>
+        <ul>
+          <li><strong>Read and change pages you visit:</strong> needed to find the sentence under your mouse and colour it, on whatever site you are reading.</li>
+          <li><strong>Storage:</strong> saves your settings.</li>
+          <li><strong>Active tab:</strong> lets the settings panel know which site you are on, so you can pause Hoverlight for just that site.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>This website</h2>
+        <p>This site is hosted on GitHub Pages. It has no analytics or cookies of its own. The live demo stores your chosen demo settings in your browser's local storage only. GitHub may keep standard server logs; see GitHub's own privacy statement for details.</p>
+      </section>
+
+      <section>
+        <h2>Changes and questions</h2>
+        <p>If this policy ever changes, the new version will be posted on this page with a new date. Questions are welcome<!--CONTACT-->.</p>
+      </section>
+    </article>
+  </main>
+
+  <footer class="grid">
+    <div class="brand"><svg width="19" height="16" aria-hidden="true"><use href="#logo"/></svg>Hoverlight</div>
+    <nav aria-label="Footer"><!--FOOTER_LINKS--></nav>
+  </footer>
+</div>

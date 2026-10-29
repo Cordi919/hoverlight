@@ -1,0 +1,350 @@
+<title>Hoverlight</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Rest your mouse on a sentence and it lights up. A free reading guide for dyslexia, ADHD and tired eyes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,400;1,7..72,400&display=swap">
+<style>
+/*BASE_CSS*/
+
+/* ---------- header ---------- */
+.top { padding-block: var(--s5) var(--s5); row-gap: var(--s3); }
+h1 {
+  grid-column: 1 / 4; margin: 0;
+  font-weight: 600; font-size: var(--t-h1); line-height: 1.08; letter-spacing: -0.028em; text-wrap: balance;
+}
+h1 .lit {
+  background: linear-gradient(transparent 14%, var(--strip) 14% 90%, transparent 90%);
+  border-radius: 4px; padding-inline: .06em; transition: background .25s;
+  color: #1e3329;
+}
+.lede { grid-column: 1 / 3; margin: 0; color: var(--ink-soft); font-size: var(--t-lede); line-height: 1.6; }
+
+.cta { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s1); }
+.btn {
+  display: inline-flex; align-items: center; gap: var(--s1); height: 44px; padding: 0 var(--s3);
+  border-radius: 8px; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink);
+  font: 500 var(--t-body)/1 var(--font-ui); text-decoration: none; white-space: nowrap;
+}
+.btn:hover { border-color: var(--ink-soft); }
+.btn.primary { background: var(--green); border-color: var(--green); color: var(--sheet); }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.soon { color: var(--ink-soft); border-style: dashed; cursor: default; }
+.btn.soon:hover { border-color: var(--rule); }
+.btn small { font-size: var(--t-small); font-weight: 400; color: inherit; opacity: .8; }
+.cta .text-link { margin-left: var(--s1); font-size: var(--t-small); font-weight: 500; }
+
+/* ---------- demo ---------- */
+.demo { align-items: start; padding-bottom: var(--s6); }
+.card { background: var(--sheet); border: 1px solid var(--rule); border-radius: var(--radius); padding: var(--pad); min-width: 0; }
+.sheet { grid-column: 1 / 4; }
+.tray { grid-column: 4 / 5; position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--s3)); display: grid; gap: var(--s4); }
+
+/* both cards open with a 16px label row, so their first lines sit on the same baseline */
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); height: 16px; margin-bottom: var(--s3); }
+.card-head .live { display: flex; align-items: center; gap: var(--s1); }
+.card-head .live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--strip); box-shadow: 0 0 0 1px rgba(30,51,41,.18); }
+
+.passage { font-family: var(--font-read); font-size: clamp(1.0625rem, 1rem + .3vw, 1.1875rem); line-height: 1.85; max-width: 64ch; }
+.passage h2 { font-family: var(--font-ui); font-weight: 600; font-size: var(--t-h2); line-height: 1.3; letter-spacing: -0.012em; margin: 0 0 var(--s2); text-wrap: balance; }
+.passage p { margin: 0 0 var(--s3); }
+.passage p:last-child { margin-bottom: 0; }
+.passage a { color: inherit; }
+
+.control { display: grid; gap: 12px; }
+.control-head { display: flex; justify-content: space-between; align-items: center; }
+.control-head output { font-size: var(--t-small); font-variant-numeric: tabular-nums; color: var(--ink); }
+.swatches { display: grid; gap: 4px; }
+.swatch {
+  display: flex; align-items: center; gap: 12px; width: 100%; height: 36px; padding: 0 10px 0 6px;
+  font: 400 var(--t-small)/1 var(--font-ui); color: var(--ink); text-align: left;
+  background: none; border: 1px solid transparent; border-radius: 6px; cursor: pointer; position: relative;
+}
+.swatch i { width: 40px; height: 16px; border-radius: 3px; flex: none; box-shadow: inset 0 0 0 1px rgba(30,51,41,.1); }
+.swatch:hover { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+.swatch[aria-checked="true"] { border-color: var(--green); }
+.swatch.custom i { background: conic-gradient(#f0bcc4, #f5d77a, #b9d4a8, #b4d3e0, #d3c2e6, #f0bcc4); }
+.swatch.custom input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+input[type=range] { width: 100%; margin: 0; accent-color: var(--green); }
+.segmented { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 4px; border: 1px solid var(--rule); border-radius: 8px; }
+.segmented button {
+  height: 28px; border: 0; border-radius: 5px; background: none; cursor: pointer;
+  font: 500 var(--t-small)/1 var(--font-ui); color: var(--ink-soft); font-variant-numeric: tabular-nums;
+}
+.segmented button:hover { color: var(--ink); }
+.segmented button[aria-checked="true"] { background: var(--green); color: var(--sheet); }
+.hint { margin: 0; font-size: var(--t-small); color: var(--ink-soft); line-height: 1.5; }
+.switch-row { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); font-size: var(--t-small); cursor: pointer; padding-top: var(--s3); border-top: 1px solid var(--rule); }
+.switch-row input { width: 18px; height: 18px; margin: 0; accent-color: var(--green); }
+
+/* ---------- sections below the demo ---------- */
+.section { border-top: 1px solid var(--rule); padding-block: var(--s5) var(--s6); row-gap: var(--s4); }
+.section-head { grid-column: 1 / -1; max-width: 60ch; display: grid; gap: var(--s1); }
+.section-head h2 { margin: 0; font-size: var(--t-h2); font-weight: 600; letter-spacing: -0.012em; line-height: 1.3; text-wrap: balance; }
+.section-head p { margin: 0; color: var(--ink-soft); }
+
+.compare { grid-column: span 2; margin: 0; display: grid; gap: var(--s2); align-content: start; }
+.mini { font-family: var(--font-read); font-size: 1.0625rem; line-height: 1.85; margin: 0; position: relative; }
+.mini .band { position: absolute; left: calc(var(--pad) * -1); right: calc(var(--pad) * -1); top: 1.85em; height: 1.85em; background: var(--strip); opacity: .55; }
+.mini span.t { position: relative; }
+.mini mark { background: color-mix(in srgb, var(--strip) 70%, transparent); color: inherit; border-radius: 2px; padding-block: 2px; }
+.compare figcaption { font-size: var(--t-small); color: var(--ink-soft); }
+.compare .card { overflow: hidden; }
+
+.steps { grid-column: 1 / -1; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: subgrid; counter-reset: step; }
+.steps li { counter-increment: step; display: grid; gap: var(--s1); align-content: start; padding-top: var(--s2); border-top: 2px solid var(--ink); min-width: 0; }
+.steps li::before { content: "0" counter(step); font-size: var(--t-small); font-weight: 600; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.steps strong { font-weight: 600; }
+.steps span { color: var(--ink-soft); font-size: var(--t-small); line-height: 1.6; }
+.reasons { grid-column: 1 / -1; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: subgrid; row-gap: var(--s4); }
+.reasons li { display: grid; gap: var(--s1); align-content: start; padding-top: var(--s2); border-top: 2px solid var(--green); min-width: 0; }
+.reasons strong { font-weight: 600; }
+.reasons span { color: var(--ink-soft); font-size: var(--t-small); line-height: 1.6; }
+
+.scope { grid-column: span 2; display: grid; gap: var(--s2); align-content: start; min-width: 0; }
+.scope h3 { margin: 0; display: flex; align-items: center; gap: var(--s1); font-size: var(--t-body); font-weight: 600; }
+.scope h3::before { content: ""; width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.scope.yes h3::before { background: var(--green); }
+.scope.no h3::before { background: transparent; box-shadow: inset 0 0 0 2px var(--ink-soft); }
+.scope ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.scope li { display: grid; gap: 2px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+.scope li:last-child { border-bottom: 0; padding-bottom: 0; }
+.scope li strong { font-weight: 500; }
+.scope li span { color: var(--ink-soft); font-size: var(--t-small); line-height: 1.55; }
+
+code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .88em; background: color-mix(in srgb, var(--ink) 7%, transparent); padding: 1px 5px; border-radius: 4px; }
+
+::highlight(hoverlight-sentence) { color: inherit; }
+
+/* ---------- narrower screens: 2 columns, then 1 ---------- */
+@media (max-width: 880px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  h1, .lede, .sheet, .section-head, .brand, footer .brand, footer nav { grid-column: 1 / -1; }
+  footer nav { justify-content: flex-start; }
+  footer { row-gap: var(--s2); }
+  .tray { grid-column: 1 / -1; grid-row: 1; position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: var(--col-gap); }
+  .tray .control:first-child { grid-row: span 2; }
+  .switch-row { align-self: end; }
+  .steps { row-gap: var(--s4); }
+  .scope { grid-column: span 1; }
+}
+@media (max-width: 560px) {
+  :root { --pad: var(--s3); }
+  .page { padding-left: max(var(--s2), env(safe-area-inset-left, 0px)); padding-right: max(var(--s2), env(safe-area-inset-right, 0px)); }
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .tray { grid-template-columns: minmax(0, 1fr); }
+  .tray .control:first-child { grid-row: auto; }
+  .tray { grid-row: auto; margin-bottom: 0; margin-top: var(--col-gap); } /* phones: text first, settings after */
+  .compare, .scope { grid-column: 1 / -1; }
+  .swatches { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<!--BODY-->
+<!--LOGO-->
+
+<div class="page">
+  <header class="top grid">
+    <div class="brand"><svg width="26" height="22" aria-hidden="true"><use href="#logo"/></svg>Hoverlight</div>
+    <h1>Rest your mouse on a sentence. <span class="lit">It lights up.</span></h1>
+    <p class="lede">A browser extension for readers with dyslexia, ADHD, or eyes that keep slipping to the wrong line. It turns the coloured reading strip from your desk into one that follows whole sentences on screen.</p>
+    <div class="cta"><!--CTA--></div>
+  </header>
+
+  <main class="demo grid">
+    <article class="card sheet">
+      <div class="card-head">
+        <p class="label live" id="hintText">Try it: hover the text</p>
+      </div>
+      <div class="passage" lang="en">
+        <h2>Why a strip of coloured plastic helps</h2>
+        <p>Many readers with dyslexia keep a coloured overlay strip on the desk. They lay it across the page so that one line sits inside a soft band of colour. The band gives the eyes a place to return to after every blink, glance away, or moment of drifting attention.</p>
+        <p>On paper, the strip only knows about lines. Sentences, though, are how meaning arrives. A sentence often starts halfway across one line and ends halfway along the next, and that jump is exactly where readers lose their place. <em>Hoverlight follows the sentence instead</em>, wrapping around the line break so the whole thought stays lit.</p>
+        <p>It works on <strong>bold words</strong> and <a href="#how">links that end a sentence.</a> Lists, quotes and table cells each keep their own sentences. Typing areas are left alone, so it never gets in the way of writing.</p>
+        <p>Does the colour itself matter? Research on tinted overlays is mixed, and many people simply prefer one shade to another. So pick any colour you like, and turn the strength up or down until it feels right. If a single sentence feels too narrow, turn on Context. The sentences around it light up too, in a softer shade.</p>
+      </div>
+    </article>
+
+    <aside class="card tray" aria-label="Highlight settings">
+      <div class="control">
+        <div class="card-head" style="margin-bottom:0"><p class="label">Colour</p></div>
+        <div class="swatches" id="swatches" role="radiogroup" aria-label="Highlight colour"></div>
+      </div>
+      <div class="control">
+        <div class="control-head"><label class="label" for="strength">Strength</label><output id="strengthOut" for="strength"></output></div>
+        <input type="range" id="strength" min="0.2" max="0.9" step="0.05">
+      </div>
+      <div class="control">
+        <div class="control-head"><p class="label" id="contextLabel">Context</p></div>
+        <div class="segmented" id="context" role="radiogroup" aria-labelledby="contextLabel"></div>
+        <p class="hint" id="contextHint"></p>
+      </div>
+      <label class="switch-row" for="enabled">Highlight on hover <input type="checkbox" id="enabled"></label>
+    </aside>
+  </main>
+
+  <section class="section grid" aria-labelledby="compare-h">
+    <div class="section-head">
+      <p class="label">The difference</p>
+      <h2 id="compare-h">A line ruler stops at the line. Hoverlight follows the sentence.</h2>
+    </div>
+    <figure class="compare" data-hoverlight-ignore>
+      <div class="card"><p class="mini"><span class="band" aria-hidden="true"></span><span class="t">The meeting ran long. Afterwards we walked down to the river and talked through the plan until the light went orange.</span></p></div>
+      <figcaption>Typical reading ruler: one line is lit, and the sentence runs on outside it.</figcaption>
+    </figure>
+    <figure class="compare" data-hoverlight-ignore>
+      <div class="card"><p class="mini">The meeting ran long. <mark>Afterwards we walked down to the river and talked through the plan until the light went orange.</mark></p></div>
+      <figcaption>Hoverlight: exactly the words of the sentence, across the line break.</figcaption>
+    </figure>
+  </section>
+
+  <section class="section grid" aria-labelledby="why-h">
+    <div class="section-head">
+      <p class="label">Why Hoverlight</p>
+      <h2 id="why-h">Does one thing, and keeps out of your way</h2>
+    </div>
+    <ul class="reasons">
+      <li><strong>Whole sentences, not lines</strong><span>Reading rulers and line-focus modes stop at the edge of a line. Hoverlight lights the exact words of the sentence, wherever it wraps.</span></li>
+      <li><strong>A softer middle ground</strong><span>Context lights the sentences around the one you are reading in a lighter shade, so you keep your place without losing the thread.</span></li>
+      <li><strong>Leaves the page alone</strong><span>No overlay, no reader view. The page keeps its layout, links stay clickable, and text boxes are skipped so typing is never affected.</span></li>
+      <li><strong>Free and private</strong><span>No account, no subscription, no tracking. It runs entirely in your browser and makes no network requests.</span></li>
+    </ul>
+  </section>
+
+  <section class="section grid" id="where" aria-labelledby="where-h">
+    <div class="section-head">
+      <p class="label">Where it works</p>
+      <h2 id="where-h">Made for reading on the web</h2>
+      <p>Hoverlight works on the text of web pages. Here is what that covers, so you know before you install.</p>
+    </div>
+    <div class="scope yes">
+      <h3>Works</h3>
+      <ul>
+        <li><strong>Chrome, Edge, Brave, Arc and Firefox</strong><span>On Mac, Windows, Linux and ChromeOS. Firefox needs version 140 or later.</span></li>
+        <li><strong>Most web pages</strong><span>Articles, blogs, news, Wikipedia, documentation, online textbooks and course pages.</span></li>
+        <li><strong>Many languages</strong><span>Sentence endings are recognised in English, Chinese, Japanese, Spanish, French, German and many more.</span></li>
+        <li><strong>Mouse, trackpad or touch screen</strong><span>Rest the pointer on a sentence, or tap it on a touch-screen laptop.</span></li>
+      </ul>
+    </div>
+    <div class="scope no">
+      <h3>Doesn't work yet</h3>
+      <ul>
+        <li><strong>PDFs in the browser's built-in viewer</strong><span>Browsers don't let extensions run inside their PDF viewers.</span></li>
+        <li><strong>Google Docs while editing</strong><span>The editor draws text as an image-like canvas, so there are no sentences to find.</span></li>
+        <li><strong>Apps outside the browser, and text in images</strong><span>Preview, Apple Books, Word and other desktop apps, plus scanned pages and pictures of text.</span></li>
+        <li><strong>Safari, phones and tablets</strong><span>Hoverlight isn't available for Safari or for mobile browsers yet.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section grid" id="how" aria-labelledby="how-h">
+    <div class="section-head">
+      <p class="label">How it works</p>
+      <h2 id="how-h">Four steps, all inside the page</h2>
+      <p>Nothing is sent anywhere. The page's layout is never changed.</p>
+    </div>
+    <ol class="steps">
+      <li><strong>Find the letter</strong><span><code>caretPositionFromPoint</code> reports which character is under the pointer. Empty margins are ignored.</span></li>
+      <li><strong>Gather the paragraph</strong><span>All text in the block is joined, including words inside <code>&lt;b&gt;</code>, <code>&lt;a&gt;</code> and <code>&lt;em&gt;</code>.</span></li>
+      <li><strong>Find the sentence</strong><span><code>Intl.Segmenter</code> finds sentence boundaries, in English and many other languages.</span></li>
+      <li><strong>Paint it</strong><span>The CSS Custom Highlight API colours those words without adding any elements.</span></li>
+    </ol>
+  </section>
+
+  <section class="section grid" id="install" aria-labelledby="install-h">
+    <div class="section-head">
+      <p class="label">Get started</p>
+      <h2 id="install-h">Free, and set up in under a minute</h2>
+      <p>Works in Chrome, Edge, Brave and Arc, and in Firefox. No account, no tracking.</p>
+    </div>
+    <ol class="steps">
+      <li><strong>Add it</strong><span>Install from your browser's extension store using the buttons at the top of this page.</span></li>
+      <li><strong>Pin it</strong><span>Click the puzzle-piece icon in the toolbar and pin Hoverlight, so its settings are one click away.</span></li>
+      <li><strong>Make it yours</strong><span>Pick a colour, set the strength, and choose whether nearby sentences light up too.</span></li>
+      <li><strong>Switch it on and off</strong><span>Press <code>⌥ ⇧ H</code> on a Mac or <code>Alt Shift H</code> on Windows, on any page.</span></li>
+    </ol>
+  </section>
+
+  <footer class="grid">
+    <div class="brand"><svg width="19" height="16" aria-hidden="true"><use href="#logo"/></svg>Hoverlight</div>
+    <nav aria-label="Footer"><!--FOOTER_LINKS--></nav>
+  </footer>
+</div>
+
+<script>
+/*DEFAULTS*/
+</script>
+<script>
+/*CORE*/
+</script>
+<script>
+(function () {
+  var PRESETS = HoverlightConfig.PRESETS;
+  var CONTEXT_OPTIONS = HoverlightConfig.CONTEXT_OPTIONS;
+  var D = HoverlightConfig.DEFAULTS;
+  var state = { color: D.color, opacity: D.opacity, context: D.context, enabled: D.enabled };
+  try {
+    var saved = JSON.parse(localStorage.getItem('hoverlight-demo-v2') || '{}');
+    Object.assign(state, saved);
+  } catch (e) {}
+
+  var $ = function (id) { return document.getElementById(id); };
+  var hl = Hoverlight.create({ root: document.querySelector('.sheet'), color: state.color, opacity: state.opacity, context: state.context, enabled: state.enabled });
+
+  var list = $('swatches');
+  PRESETS.forEach(function (p) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'swatch'; b.dataset.value = p.value;
+    b.setAttribute('role', 'radio');
+    b.innerHTML = '<i style="background:' + p.value + '"></i>' + p.name;
+    b.addEventListener('click', function () { set({ color: p.value }); });
+    list.appendChild(b);
+  });
+  var custom = document.createElement('label');
+  custom.className = 'swatch custom'; custom.setAttribute('role', 'radio');
+  custom.innerHTML = '<i></i>Any colour<input type="color" id="customColor" aria-label="Pick any colour">';
+  list.appendChild(custom);
+
+  CONTEXT_OPTIONS.forEach(function (o) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.textContent = o.label; b.dataset.value = o.value;
+    b.setAttribute('role', 'radio'); b.setAttribute('aria-label', o.hint);
+    b.addEventListener('click', function () { set({ context: o.value }); });
+    $('context').appendChild(b);
+  });
+
+  $('customColor').addEventListener('input', function (e) { set({ color: e.target.value }); });
+  $('strength').addEventListener('input', function (e) { set({ opacity: Number(e.target.value) }); });
+  $('enabled').addEventListener('change', function (e) { set({ enabled: e.target.checked }); });
+
+  if (window.matchMedia && matchMedia('(hover: none)').matches) $('hintText').textContent = 'Try it: tap any sentence';
+
+  function set(patch) {
+    Object.assign(state, patch);
+    try { localStorage.setItem('hoverlight-demo-v2', JSON.stringify(state)); } catch (e) {}
+    render();
+  }
+
+  function render() {
+    document.documentElement.style.setProperty('--strip', state.color);
+    hl.setOptions({ color: state.color, opacity: state.opacity, context: state.context, enabled: state.enabled });
+    $('context').querySelectorAll('button').forEach(function (b) {
+      b.setAttribute('aria-checked', Number(b.dataset.value) === state.context ? 'true' : 'false');
+    });
+    $('contextHint').textContent = CONTEXT_OPTIONS.filter(function (o) { return o.value === state.context; })[0].hint;
+    $('strength').value = state.opacity;
+    $('strengthOut').textContent = Math.round(state.opacity * 100) + '%';
+    $('enabled').checked = state.enabled;
+    $('customColor').value = state.color;
+    var preset = false;
+    list.querySelectorAll('.swatch').forEach(function (el) {
+      var on = !!el.dataset.value && el.dataset.value.toLowerCase() === state.color.toLowerCase();
+      if (on) preset = true;
+      el.setAttribute('aria-checked', on ? 'true' : 'false');
+    });
+    custom.setAttribute('aria-checked', preset ? 'false' : 'true');
+    custom.querySelector('i').style.background = preset ? '' : state.color;
+  }
+  render();
+})();
+</script>

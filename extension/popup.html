@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hoverlight</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <img src="icons/icon32.png" width="20" height="20" alt="">
+      <span>Hoverlight</span>
+    </div>
+    <label class="switch" title="Turn on or off (Alt+Shift+H)">
+      <input type="checkbox" id="enabled">
+      <span class="track"><span class="thumb"></span></span>
+      <span class="sr">Highlighting on</span>
+    </label>
+  </header>
+
+  <section class="preview" id="preview" lang="en">
+    <p>Rest your mouse on any sentence. The whole sentence lights up. Your eyes know exactly where to stay. Move down and the next one follows.</p>
+  </section>
+
+  <section>
+    <h2>Colour</h2>
+    <div class="swatches" id="swatches" role="radiogroup" aria-label="Highlight colour"></div>
+  </section>
+
+  <section>
+    <h2><label for="opacity">Strength</label> <output id="opacityOut"></output></h2>
+    <input type="range" id="opacity" min="0.15" max="0.8" step="0.05">
+  </section>
+
+  <section>
+    <h2 id="contextLabel">Context</h2>
+    <div class="segmented" id="context" role="radiogroup" aria-labelledby="contextLabel"></div>
+    <p class="hint" id="contextHint"></p>
+  </section>
+
+  <section class="site">
+    <label class="check">
+      <input type="checkbox" id="siteOff">
+      <span>Pause on <strong id="host">this site</strong></span>
+    </label>
+  </section>
+
+  <footer>
+    <span><kbd>⌥</kbd><kbd>⇧</kbd><kbd>H</kbd> toggles anywhere</span>
+  </footer>
+
+  <script src="defaults.js"></script>
+  <script src="hoverlight.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

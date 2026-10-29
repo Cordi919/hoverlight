@@ -1,0 +1,26 @@
+name: test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          pip install -r requirements-dev.txt
+          playwright install --with-deps chromium
+      - name: Hover tests
+        run: python tests/test_core.py
+      - name: Website is up to date
+        run: |
+          python scripts/build_site.py
+          git diff --exit-code -- docs/ || (echo "docs/ is out of date: run python3 scripts/build_site.py and commit" && exit 1)
+      - name: Package
+        run: python scripts/package.py

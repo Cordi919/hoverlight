@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Hoverlight — Sentence Reading Guide",
+  "short_name": "Hoverlight",
+  "version": "1.2.0",
+  "description": "Rest your mouse on a sentence and the whole sentence lights up. A gentle reading guide for dyslexia, ADHD and tired eyes.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Hoverlight",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "permissions": ["storage", "activeTab"],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["defaults.js", "hoverlight.js", "content.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "commands": {
+    "toggle-hoverlight": {
+      "suggested_key": { "default": "Alt+Shift+H", "mac": "Alt+Shift+H" },
+      "description": "Turn Hoverlight on or off"
+    }
+  }
+}
