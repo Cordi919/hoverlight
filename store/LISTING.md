@@ -4,7 +4,7 @@ Copy-paste text and answers for the Chrome Web Store, Microsoft Edge Add-ons and
 Firefox Add-ons. Images are in [`images/`](images/) and are regenerated with
 `python3 scripts/make_store_images.py`.
 
-Replace `USERNAME` with your GitHub username everywhere below.
+
 
 ---
 
@@ -59,17 +59,17 @@ PRIVACY
 Hoverlight does not collect, store or send any data. It has no analytics, no accounts and makes no network requests. Only your settings are saved, in your browser.
 
 Hoverlight is free and open source.
-Try the live demo: https://USERNAME.github.io/hoverlight/
-Source code: https://github.com/USERNAME/hoverlight
+Try the live demo: https://cordi919.github.io/hoverlight/
+Source code: https://github.com/cordi919/hoverlight
 ```
 
 **Links**
 
 | Field | Value |
 | --- | --- |
-| Homepage / website | `https://USERNAME.github.io/hoverlight/` |
-| Support | `https://github.com/USERNAME/hoverlight/issues` |
-| Privacy policy | `https://USERNAME.github.io/hoverlight/privacy.html` |
+| Homepage / website | `https://cordi919.github.io/hoverlight/` |
+| Support | `https://github.com/cordi919/hoverlight/issues` |
+| Privacy policy | `https://cordi919.github.io/hoverlight/privacy.html` |
 
 ---
 
@@ -109,7 +109,7 @@ Permission justifications:
 | Are you using remote code? | **No.** All JavaScript is included in the package. |
 | Data usage: what user data do you collect? | Check **nothing**. |
 | Certifications | Check all three (no selling data, no unrelated use, no creditworthiness use). |
-| Privacy policy URL | `https://USERNAME.github.io/hoverlight/privacy.html` |
+| Privacy policy URL | `https://cordi919.github.io/hoverlight/privacy.html` |
 
 **Distribution tab:** Public, all regions.
 

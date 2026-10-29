@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://USERNAME.github.io/hoverlight/"><strong>Live demo</strong></a> ·
+  <a href="https://cordi919.github.io/hoverlight/"><strong>Live demo</strong></a> ·
   Chrome Web Store <em>(coming soon)</em> ·
   Edge Add-ons <em>(coming soon)</em> ·
   Firefox Add-ons <em>(coming soon)</em>
@@ -29,7 +29,7 @@ Some readers keep a coloured overlay strip on the desk to hold their place on pa
 
 ## Install
 
-**From a store:** Chrome, Edge and Firefox listings are on the way. Links will appear above and on the [website](https://USERNAME.github.io/hoverlight/).
+**From a store:** Chrome, Edge and Firefox listings are on the way. Links will appear above and on the [website](https://cordi919.github.io/hoverlight/).
 
 **From source** (Chrome, Edge, Brave, Arc):
 
