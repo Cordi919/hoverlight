@@ -50,8 +50,8 @@ HEAD = """<!doctype html>
 
 STORES = [
     ("chrome", "Add to Chrome", "primary"),
-    ("edge", "Add to Edge", ""),
     ("firefox", "Add to Firefox", ""),
+    ("edge", "Add to Edge", ""),
 ]
 
 

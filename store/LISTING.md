@@ -1,5 +1,7 @@
 # Store listing
 
+Live listings: [Chrome Web Store](https://chromewebstore.google.com/detail/hoverlight-%E2%80%94-sentence-rea/pggkiefgeaeoiaiikofdkokpdhlopjne) · [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/hoverlight/) · Edge: not submitted yet.
+
 Copy-paste text and answers for the Chrome Web Store, Microsoft Edge Add-ons and
 Firefox Add-ons. Images are in [`images/`](images/) and are regenerated with
 `python3 scripts/make_store_images.py`.

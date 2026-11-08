@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Released
+- Hoverlight 1.2.0 is live on the [Chrome Web Store](https://chromewebstore.google.com/detail/pggkiefgeaeoiaiikofdkokpdhlopjne) and [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/hoverlight/).
+
 ### Added
 - Firefox support: `scripts/package.py` builds a Firefox package from the same source.
 - Website for GitHub Pages with a live demo, store buttons and a privacy policy.
